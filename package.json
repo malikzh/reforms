@@ -1,0 +1,37 @@
+{
+  "name": "@empla/reforms",
+  "version": "0.0.0",
+  "description": "Vue 3 and Bootstrap 5 forms generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vue-cli-service serve --port=9000 examples/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/empla/reforms.git"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "forms",
+    "generator",
+    "ui",
+    "bootstrap5"
+  ],
+  "author": "EMPLA GROUP, LLP",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/empla/reforms/issues"
+  },
+  "homepage": "https://github.com/empla/reforms#readme",
+  "devDependencies": {
+    "@vue/cli-service": "^5.0.0-alpha.4",
+    "@vue/compiler-sfc": "^3.0.5",
+    "bootstrap": "^5.0.0-beta2",
+    "vue": "^3.0.5"
+  },
+  "dependencies": {
+    "lodash": "^4.17.20"
+  }
+}
