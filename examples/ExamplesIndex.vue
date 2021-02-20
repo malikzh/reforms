@@ -25,7 +25,7 @@ export default {
             multiple: true
           },
           showIf(values) {
-            console.log('uslovie', values.test);
+            //console.log('uslovie', values.test);
             return values.test === 'ert';
           }
         },
@@ -38,7 +38,9 @@ export default {
   },
   methods: {
     showValues() {
-      console.log('bee', this.val.user[0]);
+      console.log('bee', this.val.user[0].value);
+      console.log(this.val.user);
+      this.val.user[0].value = 'dfgh555';
     }
   }
 };

@@ -34,12 +34,6 @@ export default {
     watch(containerRef, (container) => {
       this.$emit('update:modelValue', container);
     }, {deep: true});
-
-    watch(toRef(this.$props, 'modelValue'), (m) => {
-      Object.keys(m).forEach((k) => {
-        this.container[k] = m[k];
-      });
-    }, {deep: true,});
   }
 };
 </script>
