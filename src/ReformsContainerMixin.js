@@ -1,5 +1,3 @@
-import {watch} from 'vue';
-
 export default {
     data() {
         return {
@@ -8,11 +6,7 @@ export default {
     },
     methods: {
         registerInput(input) {
-            this.container[input.name] = null;
-
-            watch(input.inputs, (val) => {
-                this.container[input.name] = input.multiple ? val.map((v) => v.value) : val[0].value;
-            }, {deep: true});
+            this.container[input.name] = input.multiple ? input.inputs :  input.inputs[0];
         },
         unregisterInput(name) {
             this.container[name] = undefined;

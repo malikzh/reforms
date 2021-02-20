@@ -1,5 +1,5 @@
 <template>
-  <div class="reforms-input-container row">
+  <div class="reforms-input-container row" v-show="shown">
     <div class="col-7">
       <div v-for="(input, i) in inputs" class="row align-items-center mb-2">
         <div class="col">
@@ -56,6 +56,10 @@ export default {
     sortable: Boolean,
     ignored: Boolean,
     name: String,
+    shown: {
+      type: Boolean,
+      default: true,
+    }
   },
   emits: ['update:modelValue', 'validated', 'beforeValidate'],
   data() {
