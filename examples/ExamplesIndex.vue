@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reforms-input type="string" multiple v-model="val" />
+    <reforms-input type="string" :multiple="{min: 3, max: 5}" sortable v-model="val" />
   </div>
 </template>
 <script>
