@@ -1,5 +1,17 @@
 <template>
   <div>
-    test
+    <reforms-input type="string" multiple v-model="val" />
   </div>
 </template>
+<script>
+import ReformsInput from "../src/ReformsInput";
+export default {
+  name: "ExamplesIndex",
+  components: {ReformsInput},
+  data() {
+    return {
+      val: ['d', 'b'],
+    }
+  },
+};
+</script>
