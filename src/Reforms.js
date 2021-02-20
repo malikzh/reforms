@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import ReformsStringInput from "./input/ReformsStringInput";
 import ReformsInput from "./ReformsInput";
+import ReformsForm from "./ReformsForm";
 
 // Reforms default components need to register in Vue
 const defaultComponents = {
@@ -38,5 +39,6 @@ export default {
         app.config.globalProperties.$reforms = $reforms;
 
         app.component(ReformsInput.name, ReformsInput);
+        app.component(ReformsForm.name, ReformsForm);
     },
 }

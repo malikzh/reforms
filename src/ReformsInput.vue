@@ -3,7 +3,7 @@
     <div class="col-7">
       <div v-for="(input, i) in inputs" class="row align-items-center mb-2">
         <div class="col">
-          <component :is="inputComponent" v-bind="$attrs" :name="name" v-model="inputs[i].value" @update:model-value="updateValues"></component>
+          <component :is="inputComponent" v-bind="$attrs" :name="name + (this.multiple ? '[]' : '')" v-model="inputs[i].value" @update:model-value="updateValues"></component>
         </div>
         <div class="col-auto" v-if="this.sortable">
           <div class="row g-1" style="min-width: 96px;">
@@ -147,6 +147,15 @@ export default {
       this.inputs[i-1] = tmp;
       this.updateValues();
     },
+    findParentContainer() {
+      let p = this.$parent;
+
+      while (p && !_.isFunction(p.registerInput)) {
+        p = p.$parent;
+      }
+
+      return p;
+    },
   },
   computed: {
     multipleMax() {
@@ -161,7 +170,22 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$attrs);
+    const p = this.findParentContainer();
+
+    if (!p) {
+      return;
+    }
+
+    p.registerInput(this);
+  },
+  beforeUnmount() {
+    const p = this.findParentContainer();
+
+    if (!p) {
+      return;
+    }
+
+    p.unregisterInput(this.name);
   }
 };
 </script>

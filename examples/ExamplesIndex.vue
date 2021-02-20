@@ -1,16 +1,20 @@
 <template>
   <div>
-    <reforms-input type="string" name="testy" :multiple="{min: 3, max: 5}" sortable v-model="val" />
+    <reforms-form v-model="val">
+      <reforms-input v-if="kek" type="string" name="testy"/>
+    </reforms-form>
   </div>
 </template>
 <script>
 import ReformsInput from "../src/ReformsInput";
+import ReformsForm from "../src/ReformsForm";
 export default {
   name: "ExamplesIndex",
-  components: {ReformsInput},
+  components: {ReformsForm, ReformsInput},
   data() {
     return {
-      val: ['d', 'b'],
+      val: {},
+      kek: true,
     }
   },
 };
