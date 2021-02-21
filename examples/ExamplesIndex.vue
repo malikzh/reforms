@@ -38,9 +38,9 @@ export default {
   },
   methods: {
     showValues() {
-      console.log('bee', this.val.user[0].value);
+      console.log('test', this.val.user[0]);
       console.log(this.val.user);
-      this.val.user[0].value = 'dfgh555';
+      this.val.user[0] = 'dfgh555';
     }
   }
 };

@@ -11,23 +11,26 @@ export default {
     },
     methods: {
         registerInput(input) {
-            this.containerListeners[input.name] = (modelValue) => {
-                if (!input.$props.shown) {
-                    this.container[input.name] = undefined;
-                    return
-                }
+            this.containerListeners[input.name] = {
+                modelValue: (modelValue) => {
+                    if (!input.$props.shown) {
+                        this.container[input.name] = undefined;
+                        return
+                    }
 
-                this.container[input.name] = modelValue;
-            };
+                    this.container[input.name] = modelValue;
+                },
+                shown: (shown) => {
+                    if (!shown) {
+                        this.container[input.name] = undefined;
+                    } else {
+                        input.updateValues();
+                    }
+                },
+            }
 
-            input.events.on('out:modelValue', this.containerListeners[input.name]);
-            input.events.on('out:shown', (shown) => {
-                if (!shown) {
-                    this.container[input.name] = undefined;
-                } else {
-                    input.updateValues();
-                }
-            });
+            input.events.on('out:modelValue', this.containerListeners[input.name].modelValue);
+            input.events.on('out:shown', this.containerListeners[input.name].shown);
 
             this.containerWatchers[input.name] = watch(toRef(this.container, input.name), (value) => {
                 if (!input.$props.shown) {
@@ -43,7 +46,8 @@ export default {
             this.container[name] = undefined;
             this.containerWatchers[name]();
             this.containerWatchers[name] = undefined;
-            this.containerInputs[name].events.off('out:modelValue', this.containerListeners[name]);
+            this.containerInputs[name].events.off('out:modelValue', this.containerListeners[name].modelValue);
+            this.containerInputs[name].events.off('out:shown', this.containerListeners[name].shown);
             this.containerInputs[name] = undefined;
             this.containerListeners[name] = undefined;
         }
