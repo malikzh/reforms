@@ -36,6 +36,7 @@
 <script>
 import _ from 'lodash';
 import {reactive, ref, watch, toRef} from 'vue';
+import mitt from 'mitt';
 
 export default {
   name: 'ReformsInput',
@@ -65,6 +66,7 @@ export default {
   data() {
     return {
       inputComponent: this.$reforms.types[this.type].input,
+      events: mitt(),
     };
   },
   setup(props) {
@@ -130,7 +132,10 @@ export default {
   methods: {
     updateValues() {
       const values = this.inputs.map((v) => v.value);
-      this.$emit('update:modelValue', this.multiple ? values : values[0]);
+      const emitData = this.multiple ? values : values[0];
+      this.$emit('update:modelValue', emitData);
+      this.events.emit('out:modelValue', emitData);
+
     },
     addItem() {
       this.inputs.push(ref(null));
@@ -174,7 +179,28 @@ export default {
           ? this.multiple.min : 1;
     }
   },
+  created() {
+    this.events.on('in:modelValue', (value) => {
+      this.inputs.splice(0, this.inputs.length);
+
+      if (_.isArray(value)) {
+        value.forEach((v) => {
+          this.inputs.push(ref(v));
+        });
+      } else {
+        this.inputs.push(ref(value));
+      }
+    });
+
+    watch(toRef(this.$props, 'shown'), (shown) => {
+      this.events.emit('out:shown', shown);
+    })
+  },
   mounted() {
+    if (this.ignored) {
+      return;
+    }
+
     const p = this.findParentContainer();
 
     if (!p) {
@@ -184,6 +210,10 @@ export default {
     p.registerInput(this);
   },
   beforeUnmount() {
+    if (this.ignored) {
+      return;
+    }
+
     const p = this.findParentContainer();
 
     if (!p) {
