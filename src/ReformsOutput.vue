@@ -1,6 +1,6 @@
 <template>
   <div class="reforms-output-container row mb-2" v-show="shown">
-    <div class="col-7">
+    <div class="col-12">
       <div class="row align-items-center mb-2" v-for="(output, i) in outputs">
         <div class="col">
           <component :is="outputComponent" v-bind="$attrs" :value="outputs[i]" />

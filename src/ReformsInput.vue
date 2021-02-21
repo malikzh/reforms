@@ -1,6 +1,6 @@
 <template>
   <div class="reforms-input-container row mb-2" v-show="shown">
-    <div class="col-7">
+    <div class="col-12">
       <div v-for="(input, i) in inputs" class="row align-items-center mb-2">
         <div class="col">
           <component :is="inputComponent" :is-valid="inputValidation && inputValidation[i] ? inputValidation[i].isValid : null" v-bind="$attrs" :name="name + (this.multiple ? '[]' : '')" v-model="inputs[i].value" @update:model-value="updateValues"></component>
