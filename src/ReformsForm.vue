@@ -47,7 +47,7 @@ export default {
 
       // emit events
       this.$emit(result ? 'validateSuccess' : 'validateFailed', e);
-      this.$emit('validate', e);
+      this.$emit('validated', e);
       this.$emit('submit', e);
     }
   }
