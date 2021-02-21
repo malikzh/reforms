@@ -20,7 +20,7 @@ export default {
       type: String,
       default: 'string',
     },
-    modelValue: null,
+    value: null,
     shown: {
       type: Boolean,
       default: true,
@@ -33,15 +33,15 @@ export default {
     };
   },
   created() {
-    watch(toRef(this.$props, 'modelValue'), (modelValue) => {
+    watch(toRef(this.$props, 'value'), (value) => {
       this.outputs.splice(0, this.outputs.length);
 
-      if (_.isArray(modelValue)) {
-        modelValue.forEach((v) => {
+      if (_.isArray(value)) {
+        value.forEach((v) => {
           this.outputs.push(v);
         });
       } else {
-        this.outputs.push(modelValue);
+        this.outputs.push(value);
       }
     }, {deep: true, immediate: true});
   },

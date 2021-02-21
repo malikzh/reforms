@@ -1,6 +1,7 @@
 import {h, toRefs, reactive} from 'vue';
 import _ from 'lodash';
 import ReformsInput from "./ReformsInput";
+import ReformsOutput from "./ReformsOutput";
 
 function renderTree(schema, component, output) {
     let ret = [];
@@ -18,15 +19,18 @@ function renderTree(schema, component, output) {
             ...attrs,
             type: schema[key].type,
             name: key,
+            value: component.value && component.value[key] ? component.value[key] : null,
         });
 
-        if (!(!_.isFunction(schema[key].showIf)
-            || (_.isFunction(schema[key].showIf)
-                && schema[key].showIf(component.$parent.container)))) {
-            props.shown = false;
+        if (!output) {
+            if (!(!_.isFunction(schema[key].showIf)
+                || (_.isFunction(schema[key].showIf)
+                    && schema[key].showIf(component.$parent.container)))) {
+                props.shown = false;
+            }
         }
 
-        ret.push(h(ReformsInput, props, _.isObject(schema[key].children)
+        ret.push(h(output ? ReformsOutput : ReformsInput, props, _.isObject(schema[key].children)
             ? renderTree(schema[key].children, component, output)
             : undefined));
     }
@@ -43,6 +47,10 @@ export default {
             default: null,
         },
         outputMode: Boolean,
+        value: {
+            type: Object,
+            default: {},
+        }
     },
     render() {
         if (!this.schema) {

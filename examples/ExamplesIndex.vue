@@ -7,22 +7,24 @@
       </button>
     </reforms-form>
 
-    <div>
-      asdasd
-    </div>
-    <reforms-output :model-value="'azery'" />
+    <reforms-card :schema="schema" :value="val2" />
   </div>
 </template>
 <script>
 import ReformsInput from "../src/ReformsInput";
 import ReformsForm from "../src/ReformsForm";
 import ReformsOutput from "../src/ReformsOutput";
+import ReformsCard from "../src/ReformsCard";
 export default {
   name: "ExamplesIndex",
-  components: {ReformsOutput, ReformsForm, ReformsInput},
+  components: {ReformsCard, ReformsOutput, ReformsForm, ReformsInput},
   data() {
     return {
       val: {},
+      val2: {
+        test: 'testie',
+        user: ['kek', 'cheburek'],
+      },
       kek: true,
       schema: {
         user: {

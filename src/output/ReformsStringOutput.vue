@@ -1,5 +1,7 @@
 <template>
-  <div>value is: {{ value }}</div>
+  <div class="reforms-string-output">
+    {{ value }}
+  </div>
 </template>
 <script>
 export default {

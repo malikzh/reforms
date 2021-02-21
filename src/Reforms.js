@@ -2,6 +2,7 @@ import _ from 'lodash';
 import ReformsInput from "./ReformsInput";
 import ReformsOutput from "./ReformsOutput";
 import ReformsForm from "./ReformsForm";
+import ReformsCard from "./ReformsCard";
 import ReformsTypes from "./ReformsTypes";
 import ReformsValidators from './ReformsValidators';
 
@@ -55,5 +56,6 @@ export default {
         app.component(ReformsInput.name, ReformsInput);
         app.component(ReformsForm.name, ReformsForm);
         app.component(ReformsOutput.name, ReformsOutput);
+        app.component(ReformsCard.name, ReformsCard);
     },
 }
