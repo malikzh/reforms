@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form v-bind="$attrs">
     <reforms-schema v-bind="$attrs" :schema="schema" />
     <slot v-bind="$attrs"></slot>
   </form>
@@ -14,7 +14,7 @@ export default {
   inheritAttrs: false,
   components: {ReformsSchema},
   mixins: [ReformsContainerMixin],
-  emits: ['update:modelValue', 'submit', 'beforeValidation', 'validated'],
+  emits: ['update:modelValue', 'beforeValidation', 'validated'],
   props: {
     modelValue: {
       default: {},
@@ -26,7 +26,7 @@ export default {
     validationResult: {
       type: Object,
       default: {},
-    }
+    },
   },
   created() {
     const containerRef = toRef(this.$data, 'container');
@@ -34,6 +34,6 @@ export default {
     watch(containerRef, (container) => {
       this.$emit('update:modelValue', container);
     }, {deep: true});
-  }
+  },
 };
 </script>
