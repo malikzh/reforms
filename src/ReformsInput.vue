@@ -94,7 +94,8 @@ export default {
     watch(inputsRef, (modelValue) => {
       if (_.isArray(props.modelValue)) {
         if (modelValue.length > inputs.length) {
-          for (let i=0; i<(modelValue.length-inputs.length);++i) {
+          const fullLength = (modelValue.length-inputs.length);
+          for (let i=0; i<fullLength;++i) {
             inputs.push(ref(null));
           }
         } else if (modelValue.length < inputs.length) {
