@@ -45,7 +45,7 @@ export default {
                     if (_.isArray(validationResult[input.name])) {
                         input.inputValidation = validationResult[input.name];
                     }
-                }, {deep: true}),
+                }, {deep: true, immediate: true}),
             };
 
             this.containerInputs[input.name] = input;
