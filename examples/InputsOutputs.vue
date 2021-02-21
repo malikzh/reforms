@@ -1,6 +1,7 @@
 <template>
   <div>
     <string-type />
+    <hr />
   </div>
 </template>
 <script>
