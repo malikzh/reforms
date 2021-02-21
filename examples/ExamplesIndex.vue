@@ -1,7 +1,7 @@
 <template>
   <div>
     <reforms-form v-model="val" bara="bere" :schema="schema">
-<!--      <reforms-input v-if="val.test === 'bere'" type="string" name="testy"/>-->
+      <reforms-input v-if="val.test === 'bere'" type="string" name="testy"/>
     </reforms-form>
     <button @click.prevent="showValues">
       Show values
