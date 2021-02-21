@@ -46,6 +46,11 @@ export default {
                         input.inputValidation = validationResult[input.name];
                     }
                 }, {deep: true, immediate: true}),
+                validatorsWatch: watch(toRef(this.$props, 'validation'), (validation) => {
+                    if (_.isArray(validation)) {
+                        input.validators = validation;
+                    }
+                }, {deep: true, immediate: true}),
             };
 
             this.containerInputs[input.name] = input;
@@ -58,6 +63,7 @@ export default {
             this.container[name] = undefined;
             this.containerWatchers[name].containerWatch();
             this.containerWatchers[name].validationWatch();
+            this.containerWatchers[name].validatorsWatch();
             this.containerWatchers[name] = undefined;
             this.containerInputs[name].events.off('out:modelValue', this.containerListeners[name].modelValue);
             this.containerInputs[name].events.off('out:shown', this.containerListeners[name].shown);

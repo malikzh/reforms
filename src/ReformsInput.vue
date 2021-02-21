@@ -77,6 +77,7 @@ export default {
       inputComponent: this.$reforms.types[this.type].input,
       events: mitt(),
       inputValidation: [],
+      validators: [],
     };
   },
   setup(props) {
@@ -184,7 +185,7 @@ export default {
       return p;
     },
     validate() {
-      if (!_.isArray(this.validation)) {
+      if (!_.isArray(this.validators)) {
         return true;
       }
 
@@ -212,7 +213,7 @@ export default {
         });
       };
 
-      for (let v of this.validation) {
+      for (let v of this.validators) {
         if (!_.isString(v.name) || !this.$reforms.validators[v.name]) {
           console.warn('Invalid validator name: ' + v.name);
           continue;
@@ -277,6 +278,10 @@ export default {
 
     watch(toRef(this.$props, 'validationResult'), (validationResult) => {
       this.inputValidation = validationResult;
+    }, {deep: true, immediate: true});
+
+    watch(toRef(this.$props, 'validation'), (validation) => {
+      this.validators = validation;
     }, {deep: true, immediate: true});
   },
   mounted() {

@@ -1,5 +1,5 @@
 <template>
-  <form v-bind="$attrs">
+  <form v-bind="$attrs" @submit="onSubmit">
     <reforms-schema v-bind="$attrs" :schema="schema" />
     <slot v-bind="$attrs"></slot>
   </form>
@@ -14,7 +14,7 @@ export default {
   inheritAttrs: false,
   components: {ReformsSchema},
   mixins: [ReformsContainerMixin],
-  emits: ['update:modelValue', 'beforeValidation', 'validated'],
+  emits: ['update:modelValue', 'beforeValidate', 'validated', 'validateFailed', 'validateSuccess', 'submit'],
   props: {
     modelValue: {
       default: {},
@@ -35,5 +35,21 @@ export default {
       this.$emit('update:modelValue', container);
     }, {deep: true});
   },
+  methods: {
+    onSubmit(e) {
+      this.$emit('beforeValidate', e);
+
+      // validate all
+      let result = true;
+      Object.keys(this.containerInputs).forEach( (name) => {
+        result = this.containerInputs[name].validate() && result;
+      });
+
+      // emit events
+      this.$emit(result ? 'validateSuccess' : 'validateFailed', e);
+      this.$emit('validate', e);
+      this.$emit('submit', e);
+    }
+  }
 };
 </script>

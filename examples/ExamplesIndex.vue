@@ -1,11 +1,11 @@
 <template>
   <div>
-    <reforms-input :validation="[{name: 'required'}, {name: 'required2'}]" ref="dff"/>
-    <reforms-form :validation-result="valid" v-model="val" bara="bere" :schema="schema" @submit.prevent="onSubmit">
+    <reforms-form v-model="val" bara="bere" :schema="schema" @submit.prevent="onSubmit">
+<!--      <reforms-input :validation="[{name: 'required'}, {name: 'required2'}]" />-->
+      <button type="submit" class="btn btn-success">
+        sumbmit
+      </button>
     </reforms-form>
-    <button @click.prevent="showValues">
-      Show values
-    </button>
   </div>
 </template>
 <script>
@@ -31,7 +31,9 @@ export default {
         },
         test: {
           type: 'string',
-          attrs: {}
+          attrs: {
+            validation: [{name: 'required'}, {name: 'required2'}],
+          },
         },
       },
       valid: {
@@ -57,8 +59,5 @@ export default {
       console.log('submitted!');
     }
   },
-  mounted() {
-    this.$refs.dff.validate();
-  }
 };
 </script>
