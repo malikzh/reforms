@@ -3,7 +3,16 @@
     <div class="col-7">
       <div v-for="(input, i) in inputs" class="row align-items-center mb-2">
         <div class="col">
-          <component :is="inputComponent" v-bind="$attrs" :name="name + (this.multiple ? '[]' : '')" v-model="inputs[i].value" @update:model-value="updateValues"></component>
+          <component :is="inputComponent" :is-valid="inputValidation && inputValidation[i] ? inputValidation[i].isValid : null" v-bind="$attrs" :name="name + (this.multiple ? '[]' : '')" v-model="inputs[i].value" @update:model-value="updateValues"></component>
+          <div class="reforms-validation row mt-2" v-if="() => inputValidation[i] && _.isArray(inputValidation[i].messages) && inputValidation[i].messages.length > 0">
+            <div class="col">
+              <ul class="d-block" :class="{'valid-feedback': inputValidation[i] && inputValidation[i].isValid === true, 'invalid-feedback': inputValidation[i] && inputValidation[i].isValid === false,}">
+                <li v-for="message in (inputValidation[i] ? inputValidation[i].messages : [])">
+                  {{ message }}
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="col-auto" v-if="this.sortable">
           <div class="row g-1" style="min-width: 96px;">
@@ -67,6 +76,7 @@ export default {
     return {
       inputComponent: this.$reforms.types[this.type].input,
       events: mitt(),
+      inputValidation: [],
     };
   },
   setup(props) {
@@ -137,21 +147,28 @@ export default {
       this.events.emit('out:modelValue', emitData);
 
     },
+    resetValidation() {
+      this.validationResult.splice(0, this.validationResult.length);
+    },
     addItem() {
+      this.resetValidation();
       this.inputs.push(ref(null));
       this.updateValues();
     },
     removeItem(index) {
+      this.resetValidation();
       this.inputs.splice(index, 1);
       this.updateValues();
     },
     moveItemDown(i) {
+      this.resetValidation();
       const tmp = this.inputs[i];
       this.inputs[i] = this.inputs[i+1];
       this.inputs[i+1] = tmp;
       this.updateValues();
     },
     moveItemUp(i) {
+      this.resetValidation();
       const tmp = this.inputs[i];
       this.inputs[i] = this.inputs[i-1];
       this.inputs[i-1] = tmp;
@@ -194,7 +211,11 @@ export default {
 
     watch(toRef(this.$props, 'shown'), (shown) => {
       this.events.emit('out:shown', shown);
-    })
+    });
+
+    watch(toRef(this.$props, 'validationResult'), (validationResult) => {
+      this.inputValidation = validationResult;
+    }, {deep: true, immediate: true});
   },
   mounted() {
     if (this.ignored) {

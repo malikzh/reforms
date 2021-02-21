@@ -1,4 +1,5 @@
 import {toRef, watch} from 'vue';
+import _ from 'lodash';
 
 export default {
     data() {
@@ -32,19 +33,31 @@ export default {
             input.events.on('out:modelValue', this.containerListeners[input.name].modelValue);
             input.events.on('out:shown', this.containerListeners[input.name].shown);
 
-            this.containerWatchers[input.name] = watch(toRef(this.container, input.name), (value) => {
-                if (!input.$props.shown) {
-                    return;
-                }
+            this.containerWatchers[input.name] = {
+                containerWatch: watch(toRef(this.container, input.name), (value) => {
+                    if (!input.$props.shown) {
+                        return;
+                    }
 
-                input.events.emit('in:modelValue', value);
-            }, {deep: true});
+                    input.events.emit('in:modelValue', value);
+                }, {deep: true}),
+                validationWatch: watch(toRef(this.$props, 'validationResult'), (validationResult) => {
+                    if (_.isArray(validationResult[input.name])) {
+                        input.inputValidation = validationResult[input.name];
+                    }
+                }, {deep: true}),
+            };
 
             this.containerInputs[input.name] = input;
         },
         unregisterInput(name) {
+            if (!this.container[name]) {
+                return;
+            }
+
             this.container[name] = undefined;
-            this.containerWatchers[name]();
+            this.containerWatchers[name].containerWatch();
+            this.containerWatchers[name].validationWatch();
             this.containerWatchers[name] = undefined;
             this.containerInputs[name].events.off('out:modelValue', this.containerListeners[name].modelValue);
             this.containerInputs[name].events.off('out:shown', this.containerListeners[name].shown);

@@ -1,10 +1,7 @@
 <template>
   <div>
-    <reforms-form v-model="val" bara="bere" :schema="schema" @submit.prevent="onSubmit">
-      <div>
-      <reforms-input v-if="val.test === 'bere'" ignored type="string" name="testy"/>
-      </div>
-      <button type="submit">submit</button>
+    <reforms-input :validation-result="[{isValid: true, messages: ['asd', 'sds']}]" />
+    <reforms-form :validation-result="valid" v-model="val" bara="bere" :schema="schema" @submit.prevent="onSubmit">
     </reforms-form>
     <button @click.prevent="showValues">
       Show values
@@ -37,7 +34,18 @@ export default {
           attrs: {}
         },
       },
-    }
+      valid: {
+        test: [
+          {
+            isValid: true,
+            messages: [
+              'kek',
+              'cheburek',
+            ],
+          },
+        ],
+      },
+    };
   },
   methods: {
     showValues() {
