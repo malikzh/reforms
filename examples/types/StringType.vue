@@ -19,7 +19,7 @@
         <b>(multiple)</b>
       </div>
       <div class="col-6">
-        <reforms-input type="string" multiple v-model="modelStringMultiple" />
+        <reforms-input type="string" multiple sortable v-model="modelStringMultiple" />
       </div>
       <div class="col-6">
         <reforms-output type="string" :value="modelStringMultiple" />
