@@ -57,7 +57,7 @@ export default {
       default: 'string',
     },
     modelValue: null,
-    validation: [Array, String],
+    validation: [Array],
     validationResult: {
       type: Array,
       default: [],
@@ -182,6 +182,68 @@ export default {
       }
 
       return p;
+    },
+    validate() {
+      if (!_.isArray(this.validation)) {
+        return true;
+      }
+
+      const values = this.inputs.map((v) => v.value);
+      const value = this.multiple ? values : values[0];
+
+      let params = {
+        stop: false,
+        field: this.name,
+        multiple: this.multiple,
+        type: this.type,
+        value: value,
+      };
+
+      let validationResultSuccess = [];
+      let validationResultFail = [];
+
+      const validationMerge = (a, b) => {
+        b.forEach((v, i) => {
+          if (i >= a.length) {
+            a.push(v);
+          } else {
+            a[i].messages = _.uniq(a[i].messages.concat(v.messages));
+          }
+        });
+      };
+
+      for (let v of this.validation) {
+        if (!_.isString(v.name) || !this.$reforms.validators[v.name]) {
+          console.warn('Invalid validator name: ' + v.name);
+          continue;
+        }
+
+        params.options = v.options;
+
+        const validator = this.$reforms.validators[v.name];
+
+        const validationResult = validator(params);
+
+        if (_.isArray(validationResult)) {
+          if (validationResult.reduce((acc, val) => acc && val.isValid, true)) {
+            validationMerge(validationResultSuccess, validationResult);
+          } else {
+            validationMerge(validationResultFail, validationResult);
+          }
+        }
+
+        if (params.stop) {
+          break;
+        }
+      }
+
+      if (validationResultFail.length < 1) {
+        this.inputValidation = validationResultSuccess;
+      } else {
+        this.inputValidation = validationResultFail;
+      }
+
+      return validationResultFail.length < 1;
     },
   },
   computed: {

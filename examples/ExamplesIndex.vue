@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reforms-input :validation-result="[{isValid: true, messages: ['asd', 'sds']}]" />
+    <reforms-input :validation="[{name: 'required'}, {name: 'required2'}]" ref="dff"/>
     <reforms-form :validation-result="valid" v-model="val" bara="bere" :schema="schema" @submit.prevent="onSubmit">
     </reforms-form>
     <button @click.prevent="showValues">
@@ -56,6 +56,9 @@ export default {
     onSubmit() {
       console.log('submitted!');
     }
+  },
+  mounted() {
+    this.$refs.dff.validate();
   }
 };
 </script>
