@@ -6,14 +6,20 @@
         sumbmit
       </button>
     </reforms-form>
+
+    <div>
+      asdasd
+    </div>
+    <reforms-output :model-value="'azery'" />
   </div>
 </template>
 <script>
 import ReformsInput from "../src/ReformsInput";
 import ReformsForm from "../src/ReformsForm";
+import ReformsOutput from "../src/ReformsOutput";
 export default {
   name: "ExamplesIndex",
-  components: {ReformsForm, ReformsInput},
+  components: {ReformsOutput, ReformsForm, ReformsInput},
   data() {
     return {
       val: {},

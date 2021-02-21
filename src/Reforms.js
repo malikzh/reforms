@@ -1,12 +1,15 @@
 import _ from 'lodash';
-import ReformsStringInput from "./input/ReformsStringInput";
 import ReformsInput from "./ReformsInput";
+import ReformsOutput from "./ReformsOutput";
 import ReformsForm from "./ReformsForm";
+import ReformsTypes from "./ReformsTypes";
+import ReformsValidators from './ReformsValidators';
 
-// Reforms default components need to register in Vue
-const defaultComponents = {
-    'string': ReformsStringInput,
-};
+// Inputs
+import ReformsStringInput from "./input/ReformsStringInput";
+
+// Outputs
+import ReformsStringOutput from "./output/ReformsStringOutput";
 
 // Plugin main initializer
 export default {
@@ -17,38 +20,18 @@ export default {
      * @param {Object?} options
      */
     install(app, options) {
+        let types = {};
+
+        Object.keys(ReformsTypes).forEach((key) => {
+            types[key] = {
+                input: ReformsTypes[key].input.name,
+                output: ReformsTypes[key].output.name,
+            };
+        });
+
         const $reforms = {
-            types: {
-                'string': {
-                    input: ReformsStringInput.name,
-                    output: null, // todo
-                }
-            },
-            validators: {
-                // todo create validators file
-                required: (params) => {
-                    console.log('cprt');
-                    return [
-                        {
-                            isValid: true,
-                            messages: [
-                                'Поле не заполнено',
-                            ],
-                        }
-                    ];
-                },
-                required2: (params) => {
-                    console.log('cprt');
-                    return [
-                        {
-                            isValid: false,
-                            messages: [
-                                'Поле заполнено',
-                            ],
-                        }
-                    ];
-                }
-            },
+            types: types,
+            validators: ReformsValidators,
         };
 
 
@@ -56,8 +39,14 @@ export default {
             options.types.keys().forEach((k) => !void($reforms.types[k] = options.types[k]));
         }
 
-        for (const [name, component] of Object.entries(defaultComponents)) {
-            app.component(component.name, component);
+        for (const v of Object.values(ReformsTypes)) {
+            if (v.input) {
+                app.component(v.input.name, v.input);
+            }
+
+            if (v.output) {
+                app.component(v.output.name, v.output);
+            }
         }
 
         // Register system properties and components
@@ -65,5 +54,6 @@ export default {
 
         app.component(ReformsInput.name, ReformsInput);
         app.component(ReformsForm.name, ReformsForm);
+        app.component(ReformsOutput.name, ReformsOutput);
     },
 }
