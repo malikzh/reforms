@@ -1,7 +1,7 @@
 <template>
   <div class="reforms-input-container row mb-2" v-show="shown">
     <div class="col-12">
-      <div v-for="(input, i) in inputs" class="row align-items-center mb-2">
+      <div v-for="(input, i) in inputs" class="row align-items-start mb-2">
         <div class="col">
           <component :is="inputComponent" :is-valid="inputValidation && inputValidation[i] ? inputValidation[i].isValid : null" v-bind="$attrs" :name="name + (this.multiple ? '[]' : '')" v-model="inputs[i].value" @update:model-value="updateValues"></component>
           <div class="reforms-validation row mt-2" v-if="() => inputValidation[i] && _.isArray(inputValidation[i].messages) && inputValidation[i].messages.length > 0">
@@ -14,14 +14,14 @@
             </div>
           </div>
         </div>
-        <div class="col-auto" v-if="this.sortable">
+        <div class="col-auto" v-if="this.multiple" style="padding-top: 4px;">
           <div class="row g-1" style="min-width: 96px;">
-            <div class="col-auto" style="min-width: 33px;">
+            <div class="col-auto" style="min-width: 33px;" v-if="this.sortable">
               <button v-if="i > 0" @click.prevent="moveItemUp(i)" class="btn btn-sm btn-secondary">
                 &uarr;
               </button>
             </div>
-            <div class="col-auto" style="min-width: 33px;">
+            <div class="col-auto" style="min-width: 33px;" v-if="this.sortable">
               <button v-if="i < inputs.length-1" @click.prevent="moveItemDown(i)" class="btn btn-sm btn-secondary">
                 &darr;
               </button>
