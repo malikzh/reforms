@@ -8,7 +8,7 @@
         <b>(single)</b>
       </div>
       <div class="col-6">
-        <reforms-input type="string" label="Input label" v-model="modelString" />
+        <reforms-input type="string" hint="Some hint text" label="Input label" v-model="modelString" />
       </div>
       <div class="col-6">
         <reforms-output type="string" label="Input label"  :value="modelString" />
