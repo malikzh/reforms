@@ -4,7 +4,9 @@
     <div class="col">
       <div v-for="(input, i) in inputs" class="row align-items-start mb-2">
         <div class="col">
-          <component :is="inputComponent" :is-valid="inputValidation && inputValidation[i] ? inputValidation[i].isValid : null" v-bind="$attrs" :name="name + (this.multiple ? '[]' : '')" v-model="inputs[i].value" @update:model-value="updateValues"></component>
+          <component :is="inputComponent" :is-valid="inputValidation && inputValidation[i] ? inputValidation[i].isValid : null" v-bind="$attrs" :name="name + (this.multiple ? '[]' : '')" v-model="inputs[i].value" @update:model-value="updateValues">
+            <slot></slot>
+          </component>
           <div class="reforms-validation row mt-2" v-if="() => inputValidation[i] && _.isArray(inputValidation[i].messages) && inputValidation[i].messages.length > 0">
             <div class="col">
               <ul class="d-block" :class="{'valid-feedback': inputValidation[i] && inputValidation[i].isValid === true, 'invalid-feedback': inputValidation[i] && inputValidation[i].isValid === false,}">
@@ -273,6 +275,7 @@ export default {
       } else {
         this.inputs.push(ref(value));
       }
+
     });
 
     watch(toRef(this.$props, 'shown'), (shown) => {

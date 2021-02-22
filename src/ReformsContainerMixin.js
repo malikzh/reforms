@@ -40,7 +40,7 @@ export default {
                     }
 
                     input.events.emit('in:modelValue', value);
-                }, {deep: true}),
+                }, {deep: true, immediate: true}),
                 validationWatch: watch(toRef(this.$props, 'validationResult'), (validationResult) => {
                     if (_.isArray(validationResult[input.name])) {
                         input.inputValidation = validationResult[input.name];

@@ -41,6 +41,15 @@
           <div class="card mt-4">
             <div class="card-body">
               <inputs-outputs />
+              <hr>
+              dddd
+              <hr>
+              <reforms-form v-model="datas">
+                <reforms-input name="kik" type="group" multiple>
+                  <reforms-input name="da" />
+                  <reforms-input name="ta" />
+                </reforms-input>
+              </reforms-form>
             </div>
           </div>
         </div>
@@ -61,12 +70,14 @@
 <script>
 import InputsOutputs from "./InputsOutputs";
 import pkg from '../package.json'
+import ReformsInput from "../src/ReformsInput";
 export default {
   name: "ExampleIndex",
-  components: {InputsOutputs},
+  components: {ReformsInput, InputsOutputs},
   data() {
     return {
       version: pkg.version,
+      datas: {},
     }
   }
 };

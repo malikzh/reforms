@@ -25,8 +25,8 @@ export default {
 
         Object.keys(ReformsTypes).forEach((key) => {
             types[key] = {
-                input: ReformsTypes[key].input.name,
-                output: ReformsTypes[key].output.name,
+                input: ReformsTypes[key].input ? ReformsTypes[key].input.name : null,
+                output: ReformsTypes[key].output ? ReformsTypes[key].output.name : null,
             };
         });
 
