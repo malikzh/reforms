@@ -44,11 +44,25 @@
               <hr>
               dddd
               <hr>
-              <reforms-form v-model="datas">
-                <reforms-input name="kik" type="group" multiple>
-                  <reforms-input name="da" mask="+7 (999) 999 99 99" />
-                  <reforms-input name="ta" maxlength="10" />
-                </reforms-input>
+              <reforms-form v-model="datas" :schema="{
+                test: {
+                  type: 'string',
+                },
+                test2: {
+                  attrs: {
+                    multiple: true,
+                  },
+                  type: 'group',
+                  children: {
+                    testx: {
+                      type: 'string',
+                    },
+                    testy: {
+                      type: 'string',
+                    }
+                  }
+                },
+              }">
               </reforms-form>
             </div>
           </div>

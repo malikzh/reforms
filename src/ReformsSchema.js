@@ -31,7 +31,7 @@ function renderTree(schema, component, output) {
         }
 
         ret.push(h(output ? ReformsOutput : ReformsInput, props, _.isObject(schema[key].children)
-            ? renderTree(schema[key].children, component, output)
+            ? (() => renderTree(schema[key].children, component, output))
             : undefined));
     }
 
