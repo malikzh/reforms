@@ -1,6 +1,7 @@
 <template>
   <div class="reforms-output-container row mb-2" v-show="shown">
-    <div class="col-12">
+    <reforms-label v-bind="$attrs" />
+    <div class="col">
       <div class="row align-items-center mb-2" v-for="(output, i) in outputs">
         <div class="col">
           <component :is="outputComponent" v-bind="$attrs" :value="outputs[i]" />
@@ -12,9 +13,13 @@
 <script>
 import {watch, toRef} from 'vue';
 import _ from 'lodash';
+import ReformsLabel from "./ReformsLabel";
 
 export default {
   name: "ReformsOutput",
+  components: {
+    ReformsLabel,
+  },
   props: {
     type: {
       type: String,

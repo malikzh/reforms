@@ -1,6 +1,7 @@
 <template>
   <div class="reforms-input-container row mb-2" v-show="shown">
-    <div class="col-12">
+    <reforms-label v-bind="$attrs" />
+    <div class="col">
       <div v-for="(input, i) in inputs" class="row align-items-start mb-2">
         <div class="col">
           <component :is="inputComponent" :is-valid="inputValidation && inputValidation[i] ? inputValidation[i].isValid : null" v-bind="$attrs" :name="name + (this.multiple ? '[]' : '')" v-model="inputs[i].value" @update:model-value="updateValues"></component>
@@ -46,9 +47,11 @@
 import _ from 'lodash';
 import {reactive, ref, watch, toRef} from 'vue';
 import mitt from 'mitt';
+import ReformsLabel from "./ReformsLabel";
 
 export default {
   name: 'ReformsInput',
+  components: {ReformsLabel},
   inheritAttrs: false,
   props: {
     type: {

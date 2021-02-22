@@ -8,10 +8,10 @@
         <b>(single)</b>
       </div>
       <div class="col-6">
-        <reforms-input type="string" v-model="modelString" />
+        <reforms-input type="string" label="Input label" v-model="modelString" />
       </div>
       <div class="col-6">
-        <reforms-output type="string" :value="modelString" />
+        <reforms-output type="string" label="Input label"  :value="modelString" />
       </div>
     </div>
     <div class="row mb-2">
@@ -19,10 +19,10 @@
         <b>(multiple)</b>
       </div>
       <div class="col-6">
-        <reforms-input type="string" multiple sortable v-model="modelStringMultiple" />
+        <reforms-input type="string"  label="Input label 2"  multiple sortable v-model="modelStringMultiple" />
       </div>
       <div class="col-6">
-        <reforms-output type="string" :value="modelStringMultiple" />
+        <reforms-output type="string" label="Input label 2"  :value="modelStringMultiple" />
       </div>
     </div>
   </div>
