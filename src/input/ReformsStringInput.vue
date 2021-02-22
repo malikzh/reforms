@@ -1,11 +1,21 @@
 <template>
   <div class="reforms-input">
-    <input type="text" :placeholder="placeholder" :id="id" class="form-control" :class="classes" ref="input" v-model="inputValue">
+    <input type="text"
+           :placeholder="placeholder"
+           :readonly="readonly"
+           :maxlength="maxlength"
+           :id="id"
+           class="form-control"
+           :class="classes"
+           ref="input"
+           :tabindex="tabindex"
+           v-model="inputValue">
   </div>
 </template>
 <script>
 import ReformsInputMixin from "../ReformsInputMixin";
 import {modelValue, mergeClasses} from '../Util'
+import Inputmask from 'inputmask';
 
 export default {
   name: "ReformsStringInput",
@@ -17,7 +27,18 @@ export default {
       type: String,
       default: '',
     },
+    mask: {
+      type: [String, Object],
+      default: null,
+    },
+    maskOptions: {
+      type: Object,
+      default: {},
+    },
+    readonly: Boolean,
     placeholder: String,
+    maxlength: String,
+    tabindex: String,
   },
   computed: {
     inputValue: modelValue(),
@@ -28,5 +49,11 @@ export default {
       });
     },
   },
+  mounted() {
+    if (this.mask) {
+      const mask = new Inputmask(this.mask, this.maskOptions);
+      mask.mask(this.$refs.input);
+    }
+  }
 };
 </script>

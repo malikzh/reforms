@@ -46,8 +46,8 @@
               <hr>
               <reforms-form v-model="datas">
                 <reforms-input name="kik" type="group" multiple>
-                  <reforms-input name="da" />
-                  <reforms-input name="ta" />
+                  <reforms-input name="da" mask="+7 (999) 999 99 99" />
+                  <reforms-input name="ta" maxlength="10" />
                 </reforms-input>
               </reforms-form>
             </div>

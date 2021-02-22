@@ -12,6 +12,10 @@ export default {
     },
     methods: {
         registerInput(input) {
+            if (!this.container) {
+                this.container = {};
+            }
+
             this.containerListeners[input.name] = {
                 modelValue: (modelValue) => {
                     if (!input.$props.shown) {
