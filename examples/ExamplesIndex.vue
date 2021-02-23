@@ -41,15 +41,6 @@
           <div class="card mt-4">
             <div class="card-body">
               <inputs-outputs />
-              <hr>
-              <reforms-form @submit.prevent="() => {}">
-                <reforms-input type="string" name="test" :validation="[{name: 'required'}]" label="Test" />
-                <reforms-input type="group" name="mygroup">
-                  <reforms-input type="string" name="itema" :validation="[{name: 'required'}]" label="ItemA" />
-                  <reforms-input type="string" name="itemb" :validation="[{name: 'required'}]" label="ItemB" />
-                </reforms-input>
-                <button type="submit">subm</button>
-              </reforms-form>
             </div>
           </div>
         </div>
