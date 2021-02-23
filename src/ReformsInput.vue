@@ -4,7 +4,7 @@
     <div class="col">
       <div v-for="(input, i) in inputs" class="row align-items-start mb-2">
         <div class="col">
-          <component :is="inputComponent" :is-valid="inputValidation && inputValidation[i] ? inputValidation[i].isValid : null" v-bind="$attrs" :name="name + (this.multiple ? '[]' : '')" v-model="inputs[i].value" @update:model-value="updateValues">
+          <component :ref="(el) => {inputsList[i] = el;}" :is="inputComponent" :validation-result="inputValidation && inputValidation[i]" :is-valid="inputValidation && inputValidation[i] ? inputValidation[i].isValid : null" v-bind="$attrs" :name="name + (this.multiple ? '[]' : '')" v-model="inputs[i].value" @update:model-value="updateValues">
             <slot></slot>
           </component>
           <div class="reforms-validation row mt-2" v-if="() => inputValidation[i] && _.isArray(inputValidation[i].messages) && inputValidation[i].messages.length > 0">
@@ -83,6 +83,7 @@ export default {
       events: mitt(),
       inputValidation: [],
       validators: [],
+      inputsList: {},
     };
   },
   setup(props) {
@@ -190,6 +191,14 @@ export default {
       return p;
     },
     validate() {
+      let nestedResult = true;
+
+      this.inputs.forEach((v, i) => {
+        if (_.isFunction(this.inputsList[i].validate)) {
+          nestedResult = this.inputsList[i].validate() && nestedResult;
+        }
+      });
+
       if (!_.isArray(this.validators)) {
         return true;
       }
@@ -231,7 +240,7 @@ export default {
         const validationResult = validator(params);
 
         if (_.isArray(validationResult)) {
-          if (validationResult.reduce((acc, val) => acc && val.isValid, true)) {
+          if (validationResult.reduce((acc, val) => val.isValid && acc, true)) {
             validationMerge(validationResultSuccess, validationResult);
           } else {
             validationMerge(validationResultFail, validationResult);
@@ -249,7 +258,7 @@ export default {
         this.inputValidation = validationResultFail;
       }
 
-      return validationResultFail.length < 1;
+      return validationResultFail.length < 1 && nestedResult;
     },
   },
   computed: {

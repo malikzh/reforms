@@ -8,6 +8,7 @@
 <script>
 import {toRef, watch} from 'vue';
 import ReformsContainerMixin from "../ReformsContainerMixin";
+import _ from 'lodash';
 
 export default {
   name: "ReformsGroupInput",
@@ -33,7 +34,15 @@ export default {
   },
   methods: {
     validate() {
-      return false; //todo
+      let result = true;
+
+      Object.keys(this.containerInputs).forEach((inputName) => {
+        if (_.isFunction(this.containerInputs[inputName].validate)) {
+          result = this.containerInputs[inputName].validate() && result;
+        }
+      });
+
+      return result;
     },
   }
 };

@@ -3,7 +3,7 @@ export default {
         console.log('cprt');
         return [
             {
-                isValid: true,
+                isValid: false,
                 messages: [
                     'Поле не заполнено',
                 ],

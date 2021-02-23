@@ -42,24 +42,14 @@
             <div class="card-body">
               <inputs-outputs />
               <hr>
-              dddd
-              <hr>
-              <reforms-card :schema="{
-                mygroup: {
-                  type: 'group',
-                  attrs: {
-                    label: 'mylabelgroup'
-                  },
-                  children: {
-                    fielda: {
-                      type: 'string',
-                    },
-                    fieldb: {
-                      type: 'string',
-                    }
-                  }
-                }
-              }" :value="vala"/>
+              <reforms-form @submit.prevent="() => {}">
+                <reforms-input type="string" name="test" :validation="[{name: 'required'}]" label="Test" />
+                <reforms-input type="group" name="mygroup">
+                  <reforms-input type="string" name="itema" :validation="[{name: 'required'}]" label="ItemA" />
+                  <reforms-input type="string" name="itemb" :validation="[{name: 'required'}]" label="ItemB" />
+                </reforms-input>
+                <button type="submit">subm</button>
+              </reforms-form>
             </div>
           </div>
         </div>
@@ -80,20 +70,13 @@
 <script>
 import InputsOutputs from "./InputsOutputs";
 import pkg from '../package.json'
+import ReformsInput from "../src/ReformsInput";
 export default {
   name: "ExampleIndex",
-  components: {InputsOutputs},
+  components: {ReformsInput, InputsOutputs},
   data() {
     return {
       version: pkg.version,
-      datas: {},
-      vala: {
-        myfield: 'asdss',
-        mygroup: {
-          fielda: 'FieldA',
-          fieldb: 'FieldB',
-        }
-      },
     }
   }
 };
