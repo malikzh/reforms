@@ -2,12 +2,14 @@
   <div>
     <string-type />
     <hr />
+    <number-type />
   </div>
 </template>
 <script>
 import StringType from "./types/StringType";
+import NumberType from "./types/NumberType";
 export default {
   name: "InputsOutputs",
-  components: {StringType},
+  components: {NumberType, StringType},
 }
 </script>

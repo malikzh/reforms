@@ -40,13 +40,18 @@ export default {
             options.types.keys().forEach((k) => !void($reforms.types[k] = options.types[k]));
         }
 
+        let registeredInputs = [];
+        let registeredOutputs = [];
+
         for (const v of Object.values(ReformsTypes)) {
-            if (v.input) {
+            if (v.input && registeredInputs.indexOf(v.input) === -1) {
                 app.component(v.input.name, v.input);
+                registeredInputs.push(v.input);
             }
 
-            if (v.output) {
+            if (v.output && registeredOutputs.indexOf(v.output) === -1) {
                 app.component(v.output.name, v.output);
+                registeredOutputs.push(v.output);
             }
         }
 
