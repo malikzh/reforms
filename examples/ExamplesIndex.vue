@@ -44,26 +44,22 @@
               <hr>
               dddd
               <hr>
-              <reforms-form v-model="datas" :schema="{
-                test: {
-                  type: 'string',
-                },
-                test2: {
-                  attrs: {
-                    multiple: true,
-                  },
+              <reforms-card :schema="{
+                mygroup: {
                   type: 'group',
+                  attrs: {
+                    label: 'mylabelgroup'
+                  },
                   children: {
-                    testx: {
+                    fielda: {
                       type: 'string',
                     },
-                    testy: {
+                    fieldb: {
                       type: 'string',
                     }
                   }
-                },
-              }">
-              </reforms-form>
+                }
+              }" :value="vala"/>
             </div>
           </div>
         </div>
@@ -84,14 +80,20 @@
 <script>
 import InputsOutputs from "./InputsOutputs";
 import pkg from '../package.json'
-import ReformsInput from "../src/ReformsInput";
 export default {
   name: "ExampleIndex",
-  components: {ReformsInput, InputsOutputs},
+  components: {InputsOutputs},
   data() {
     return {
       version: pkg.version,
       datas: {},
+      vala: {
+        myfield: 'asdss',
+        mygroup: {
+          fielda: 'FieldA',
+          fieldb: 'FieldB',
+        }
+      },
     }
   }
 };

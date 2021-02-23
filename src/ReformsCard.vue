@@ -5,8 +5,10 @@
 </template>
 <script>
 import ReformsSchema from "./ReformsSchema";
+import ReformsContainerMixin from "./ReformsContainerMixin";
 export default {
   name: "ReformsCard",
+  mixins: [ReformsContainerMixin],
   components: {
     ReformsSchema,
   },

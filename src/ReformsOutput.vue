@@ -4,7 +4,9 @@
     <div class="col">
       <div class="row align-items-center mb-2" v-for="(output, i) in outputs">
         <div class="col">
-          <component :is="outputComponent" v-bind="$attrs" :value="outputs[i]" />
+          <component :is="outputComponent" v-bind="$attrs" :value="outputs[i]">
+            <slot></slot>
+          </component>
         </div>
       </div>
     </div>
@@ -29,16 +31,20 @@ export default {
     shown: {
       type: Boolean,
       default: true,
-    }
+    },
+    name: String,
   },
   data() {
     return {
       outputComponent: this.$reforms.types[this.type].output,
       outputs: [],
+      outputValue: null,
     };
   },
   created() {
-    watch(toRef(this.$props, 'value'), (value) => {
+    watch([toRef(this.$props, 'value'), toRef(this.$data, 'outputValue')], ([value1, value2]) => {
+      const value = value1 || value2;
+
       this.outputs.splice(0, this.outputs.length);
 
       if (_.isArray(value)) {
@@ -50,5 +56,37 @@ export default {
       }
     }, {deep: true, immediate: true});
   },
+  mounted() {
+    const p = this.findParentContainer();
+
+    if (!p) {
+      return;
+    }
+
+    p.registerOutput(this);
+  },
+  beforeUnmount() {
+    const p = this.findParentContainer();
+
+    if (!p) {
+      return;
+    }
+
+    p.unregisterOutput(this);
+  },
+  methods: {
+    findParentContainer() {
+      let p = this.$parent;
+
+      while (p && !_.isFunction(p.registerOutput)) {
+        p = p.$parent;
+      }
+
+      return p;
+    },
+    setValue(value) {
+      this.outputValue = value;
+    }
+  }
 };
 </script>
