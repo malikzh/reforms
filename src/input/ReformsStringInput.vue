@@ -9,6 +9,7 @@
            :class="classes"
            ref="input"
            :tabindex="tabindex"
+           :autocomplete="autocomplete"
            v-model="inputValue">
   </div>
 </template>
@@ -39,6 +40,7 @@ export default {
     placeholder: String,
     maxlength: String,
     tabindex: String,
+    autocomplete: String,
   },
   computed: {
     inputValue: modelValue(),
