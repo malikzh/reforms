@@ -40,15 +40,20 @@ export default {
       this.$emit('beforeValidate', e);
 
       // validate all
-      let result = true;
-      Object.keys(this.containerInputs).forEach( (name) => {
-        result = this.containerInputs[name].validate() && result;
-      });
+      const result = this.validate();
 
       // emit events
       this.$emit(result ? 'validateSuccess' : 'validateFailed', e);
       this.$emit('validated', e);
       this.$emit('submit', e);
+    },
+    validate() {
+      let result = true;
+      Object.keys(this.containerInputs).forEach( (name) => {
+        result = this.containerInputs[name].validate() && result;
+      });
+
+      return result;
     }
   }
 };
