@@ -8,6 +8,8 @@ import ReformsEmailInput from "./input/ReformsEmailInput";
 import ReformsEmailOutput from "./output/ReformsEmailOutput";
 import ReformsTelInput from "./input/ReformsTelInput";
 import ReformsTelOutput from "./output/ReformsTelOutput";
+import ReformsUrlInput from "./input/ReformsUrlInput";
+import ReformsUrlOutput from "./output/ReformsUrlOutput";
 
 //
 // Reforms default components
@@ -36,5 +38,9 @@ export default {
     'tel': {
         input: ReformsTelInput,
         output: ReformsTelOutput,
+    },
+    'url': {
+        input: ReformsUrlInput,
+        output: ReformsUrlOutput,
     },
 };
