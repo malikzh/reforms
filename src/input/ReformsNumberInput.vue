@@ -2,6 +2,7 @@
   <div class="reforms-input">
     <input
         type="number"
+        :name="name"
         v-model="inputValue"
         :id="id"
         :placeholder="placeholder"

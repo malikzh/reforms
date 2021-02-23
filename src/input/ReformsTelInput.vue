@@ -1,6 +1,7 @@
 <template>
   <div class="reforms-input">
     <input type="tel"
+           :name="name"
            :placeholder="placeholder"
            :readonly="readonly"
            :maxlength="maxlength"

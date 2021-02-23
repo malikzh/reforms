@@ -1,6 +1,7 @@
 <template>
   <div class="reforms-input">
     <textarea
+        :name="name"
         v-model="inputValue"
         :placeholder="placeholder"
         :readonly="readonly"
