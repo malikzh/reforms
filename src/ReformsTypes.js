@@ -10,6 +10,8 @@ import ReformsTelInput from "./input/ReformsTelInput";
 import ReformsTelOutput from "./output/ReformsTelOutput";
 import ReformsUrlInput from "./input/ReformsUrlInput";
 import ReformsUrlOutput from "./output/ReformsUrlOutput";
+import ReformsHiddenInput from "./input/ReformsHiddenInput";
+import ReformsHiddenOutput from "./output/ReformsHiddenOutput";
 
 //
 // Reforms default components
@@ -42,5 +44,9 @@ export default {
     'url': {
         input: ReformsUrlInput,
         output: ReformsUrlOutput,
+    },
+    'hidden': {
+        input: ReformsHiddenInput,
+        output: ReformsHiddenOutput,
     },
 };
