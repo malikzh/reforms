@@ -3,7 +3,7 @@ import _ from 'lodash';
 import ReformsInput from "./ReformsInput";
 import ReformsOutput from "./ReformsOutput";
 
-function renderTree(schema, component, output) {
+function renderTree(schema, component, output, prevName) {
     let ret = [];
 
     for (const key of Object.keys(schema)) {
@@ -18,7 +18,7 @@ function renderTree(schema, component, output) {
             ...toRefs(component.$attrs),
             ...attrs,
             type: schema[key].type,
-            name: key,
+            name: !prevName ? key : (prevName + '[' + key + ']'),
             value: component.value && component.value[key] ? component.value[key] : null,
         });
 
@@ -31,7 +31,7 @@ function renderTree(schema, component, output) {
         }
 
         ret.push(h(output ? ReformsOutput : ReformsInput, props, _.isObject(schema[key].children)
-            ? (() => renderTree(schema[key].children, component, output))
+            ? (() => renderTree(schema[key].children, component, output, props.name))
             : undefined));
     }
 
