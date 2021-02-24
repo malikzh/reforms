@@ -12,6 +12,8 @@ import ReformsUrlInput from "./input/ReformsUrlInput";
 import ReformsUrlOutput from "./output/ReformsUrlOutput";
 import ReformsHiddenInput from "./input/ReformsHiddenInput";
 import ReformsHiddenOutput from "./output/ReformsHiddenOutput";
+import ReformsRadioInput from "./input/ReformsRadioInput";
+import ReformsRadioOutput from "./output/ReformsRadioOutput";
 
 //
 // Reforms default components
@@ -48,5 +50,9 @@ export default {
     'hidden': {
         input: ReformsHiddenInput,
         output: ReformsHiddenOutput,
+    },
+    'radio': {
+        input: ReformsRadioInput,
+        output: ReformsRadioOutput,
     },
 };

@@ -1,5 +1,9 @@
 import _ from 'lodash';
 
+export const CHARS_ALPHA_LO = 'abcdefghijklmnopqrstuvwxyz';
+export const CHARS_ALPHA_HI = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+export const CHARS_NUMBER   = '0123456789';
+
 /**
  * Create getter & setter for v-model value
  *
@@ -45,4 +49,30 @@ export function mergeClasses(...classes) {
     }
 
     return result;
+}
+
+/**
+ * Generate random string from characters
+ *
+ * @param {number} length
+ * @param {string} characters
+ * @returns {string}
+ */
+export function randomStringFromChars(length, characters) {
+    let result = '';
+    for (let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+/**
+ * Return random id
+ *
+ * @param {number} length
+ * @returns {string}
+ */
+export function randomId(length) {
+    return randomStringFromChars(length > 0 ? 1 : 0, CHARS_ALPHA_LO + CHARS_ALPHA_HI)
+         + randomStringFromChars(length - 1, CHARS_ALPHA_HI + CHARS_ALPHA_LO + CHARS_NUMBER);
 }
