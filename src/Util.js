@@ -10,15 +10,17 @@ export const CHARS_NUMBER   = '0123456789';
  * @param {String?} propName v-model Property name
  * @returns {{set(*=): void, get(): *}|*}
  */
-export function modelValue(propName) {
+export function modelValue(propName, castTo) {
     propName = propName || 'modelValue';
+    castTo = castTo || ((value) => value);
+
 
     return {
         get() {
-            return this[propName];
+            return castTo(this[propName]);
         },
         set(value) {
-            this.$emit('update:' + propName, value);
+            this.$emit('update:' + propName, castTo(value));
         },
     };
 }

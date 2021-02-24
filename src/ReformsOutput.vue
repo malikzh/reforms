@@ -33,6 +33,7 @@ export default {
       default: true,
     },
     name: String,
+    multiple: Boolean,
   },
   data() {
     return {
@@ -43,11 +44,11 @@ export default {
   },
   created() {
     watch([toRef(this.$props, 'value'), toRef(this.$data, 'outputValue')], ([value1, value2]) => {
-      const value = value1 || value2;
+      let value = value1 || value2;
 
       this.outputs.splice(0, this.outputs.length);
 
-      if (_.isArray(value)) {
+      if (this.multiple && _.isArray(value)) {
         value.forEach((v) => {
           this.outputs.push(v);
         });

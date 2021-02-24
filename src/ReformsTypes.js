@@ -14,6 +14,8 @@ import ReformsHiddenInput from "./input/ReformsHiddenInput";
 import ReformsHiddenOutput from "./output/ReformsHiddenOutput";
 import ReformsRadioInput from "./input/ReformsRadioInput";
 import ReformsRadioOutput from "./output/ReformsRadioOutput";
+import ReformsCheckboxInput from "./input/ReformsCheckboxInput";
+import ReformsCheckboxOutput from "./output/ReformsCheckboxOutput";
 
 //
 // Reforms default components
@@ -54,5 +56,9 @@ export default {
     'radio': {
         input: ReformsRadioInput,
         output: ReformsRadioOutput,
+    },
+    'checkbox': {
+        input: ReformsCheckboxInput,
+        output: ReformsCheckboxOutput,
     },
 };

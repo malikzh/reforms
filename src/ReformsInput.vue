@@ -91,7 +91,7 @@ export default {
 
     let inputs;
 
-    if (_.isArray(props.modelValue)) {
+    if (props.multiple && _.isArray(props.modelValue)) {
       inputsRef = toRef(props, 'modelValue');
       inputs = reactive(inputsRef.value.map((v) => ref(v)));
     } else {
@@ -111,7 +111,7 @@ export default {
     }
 
     watch(inputsRef, (modelValue) => {
-      if (_.isArray(props.modelValue)) {
+      if (props.multiple && _.isArray(props.modelValue)) {
         if (modelValue.length > inputs.length) {
           const fullLength = (modelValue.length-inputs.length);
           for (let i=0; i<fullLength;++i) {
