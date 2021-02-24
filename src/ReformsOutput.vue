@@ -44,7 +44,11 @@ export default {
   },
   created() {
     watch([toRef(this.$props, 'value'), toRef(this.$data, 'outputValue')], ([value1, value2]) => {
-      let value = value1 || value2;
+      let value = value1;
+
+      if (value === null || value === undefined) {
+        value = value2;
+      }
 
       this.outputs.splice(0, this.outputs.length);
 

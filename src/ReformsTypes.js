@@ -16,6 +16,8 @@ import ReformsRadioInput from "./input/ReformsRadioInput";
 import ReformsRadioOutput from "./output/ReformsRadioOutput";
 import ReformsCheckboxInput from "./input/ReformsCheckboxInput";
 import ReformsCheckboxOutput from "./output/ReformsCheckboxOutput";
+import ReformsBooleanInput from "./input/ReformsBooleanInput";
+import ReformsBooleanOutput from "./output/ReformsBooleanOutput";
 
 //
 // Reforms default components
@@ -60,5 +62,9 @@ export default {
     'checkbox': {
         input: ReformsCheckboxInput,
         output: ReformsCheckboxOutput,
+    },
+    'bool': {
+        input: ReformsBooleanInput,
+        output: ReformsBooleanOutput,
     },
 };
