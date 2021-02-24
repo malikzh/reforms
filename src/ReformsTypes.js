@@ -18,6 +18,8 @@ import ReformsCheckboxInput from "./input/ReformsCheckboxInput";
 import ReformsCheckboxOutput from "./output/ReformsCheckboxOutput";
 import ReformsBooleanInput from "./input/ReformsBooleanInput";
 import ReformsBooleanOutput from "./output/ReformsBooleanOutput";
+import ReformsSelectInput from "./input/ReformsSelectInput";
+import ReformsSelectOutput from "./output/ReformsSelectOutput";
 
 //
 // Reforms default components
@@ -66,5 +68,9 @@ export default {
     'bool': {
         input: ReformsBooleanInput,
         output: ReformsBooleanOutput,
+    },
+    'select': {
+        input: ReformsSelectInput,
+        output: ReformsSelectOutput,
     },
 };
