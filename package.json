@@ -37,6 +37,7 @@
   "dependencies": {
     "flatpickr": "^4.6.9",
     "inputmask": "^5.0.5",
+    "jodit": "^3.6.1",
     "lodash": "^4.17.20",
     "mitt": "^2.1.0"
   }

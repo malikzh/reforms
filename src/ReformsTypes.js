@@ -21,6 +21,8 @@ import ReformsBooleanOutput from "./output/ReformsBooleanOutput";
 import ReformsSelectInput from "./input/ReformsSelectInput";
 import ReformsSelectOutput from "./output/ReformsSelectOutput";
 import ReformsDateInput from "./input/ReformsDateInput";
+import ReformsHtmlInput from "./input/ReformsHtmlInput";
+import ReformsHtmlOutput from "./output/ReformsHtmlOutput";
 
 //
 // Reforms default components
@@ -77,5 +79,9 @@ export default {
     'datetime': {
         input: ReformsDateInput,
         output: ReformsStringOutput,
+    },
+    'html': {
+        input: ReformsHtmlInput,
+        output: ReformsHtmlOutput,
     },
 };
