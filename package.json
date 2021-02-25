@@ -35,6 +35,7 @@
     "vue": "^3.0.5"
   },
   "dependencies": {
+    "flatpickr": "^4.6.9",
     "inputmask": "^5.0.5",
     "lodash": "^4.17.20",
     "mitt": "^2.1.0"
