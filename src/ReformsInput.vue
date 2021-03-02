@@ -79,7 +79,13 @@ export default {
   emits: ['update:modelValue', 'validated', 'beforeValidate'],
   data() {
     return {
-      inputComponent: this.$reforms.types[this.type].input,
+      inputComponent: (() => {
+        if (this.$reforms.types[this.type]) {
+          return this.$reforms.types[this.type].input;
+        } else {
+          throw new Error('Undefined input type "' + this.type + '".');
+        }
+      })(),
       events: mitt(),
       inputValidation: [],
       validators: [],
