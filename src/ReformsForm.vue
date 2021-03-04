@@ -27,6 +27,10 @@ export default {
       type: Object,
       default: {},
     },
+    needValidation: {
+      type: Boolean,
+      default: true,
+    }
   },
   created() {
     const containerRef = toRef(this.$data, 'container');
@@ -37,14 +41,21 @@ export default {
   },
   methods: {
     onSubmit(e) {
-      this.$emit('beforeValidate', e);
+      if (this.needValidation) {
+        this.$emit('beforeValidate', e);
 
-      // validate all
-      const result = this.validate();
+        // validate all
+        const result = this.validate();
 
-      // emit events
-      this.$emit(result ? 'validateSuccess' : 'validateFailed', e);
-      this.$emit('validated', e);
+        // emit events
+        if (!result) {
+          e.preventDefault();
+        }
+
+        this.$emit(result ? 'validateSuccess' : 'validateFailed', e);
+        this.$emit('validated', e);
+      }
+
       this.$emit('submit', e);
     },
     validate() {
