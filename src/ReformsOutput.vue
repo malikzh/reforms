@@ -37,7 +37,13 @@ export default {
   },
   data() {
     return {
-      outputComponent: this.$reforms.types[this.type].output,
+      outputComponent: (() => {
+        if (this.$reforms.types[this.type]) {
+          return this.$reforms.types[this.type].output;
+        } else {
+          throw new Error('Undefined output type "' + this.type + '".');
+        }
+      })(),
       outputs: [],
       outputValue: null,
     };
