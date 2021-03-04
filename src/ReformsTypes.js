@@ -23,6 +23,8 @@ import ReformsSelectOutput from "./output/ReformsSelectOutput";
 import ReformsDateInput from "./input/ReformsDateInput";
 import ReformsHtmlInput from "./input/ReformsHtmlInput";
 import ReformsHtmlOutput from "./output/ReformsHtmlOutput";
+import ReformsFileInput from "./input/ReformsFileInput";
+import ReformsFileOutput from "./output/ReformsFileOutput";
 
 //
 // Reforms default components
@@ -83,5 +85,9 @@ export default {
     'html': {
         input: ReformsHtmlInput,
         output: ReformsHtmlOutput,
+    },
+    'file': {
+        input: ReformsFileInput,
+        output: ReformsFileOutput,
     },
 };
