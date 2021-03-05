@@ -291,7 +291,7 @@ export default {
     this.events.on('in:modelValue', (value) => {
       this.inputs.splice(0, this.inputs.length);
 
-      if (_.isArray(value)) {
+      if (this.multiple && _.isArray(value)) {
         value.forEach((v) => {
           this.inputs.push(ref(v));
         });
