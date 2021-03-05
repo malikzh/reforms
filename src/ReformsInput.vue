@@ -50,6 +50,7 @@ import _ from 'lodash';
 import {reactive, ref, watch, toRef} from 'vue';
 import mitt from 'mitt';
 import ReformsLabel from "./ReformsLabel";
+import langEn from './lang/ru' // todo change to en
 
 export default {
   name: 'ReformsInput',
@@ -63,6 +64,10 @@ export default {
     },
     modelValue: null,
     validation: [Array],
+    language: {
+      type: Object,
+      default: langEn,
+    },
     validationResult: {
       type: Array,
       default: [],
@@ -218,6 +223,8 @@ export default {
         multiple: this.multiple,
         type: this.type,
         value: value,
+        lang: this.language,
+        form: this.findParentContainer(),
       };
 
       let validationResultSuccess = [];
@@ -241,7 +248,8 @@ export default {
 
         params.options = v.options;
 
-        const validator = this.$reforms.validators[v.name];
+        const validator = this.$reforms.validators[v.name]
+            .bind(this.$reforms.validators);
 
         const validationResult = validator(params);
 
