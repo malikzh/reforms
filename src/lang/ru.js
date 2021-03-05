@@ -10,6 +10,9 @@ export default {
         },
         email: {
             must_be_email: 'Указан некоректный E-mail'
+        },
+        url: {
+            must_be_url: 'Указан некорректный URL',
         }
     },
 };
