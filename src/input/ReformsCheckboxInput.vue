@@ -1,7 +1,7 @@
 <template>
   <div class="reforms-input">
     <div class="form-check" v-for="(option, i) in Object.entries(options)">
-      <input type="checkbox" :name="name" class="form-check-input" :class="classes" :id="idPrefix + '_' + String(i)" v-model="inputValue" :value="option[0]">
+      <input type="checkbox" :name="name + '[' + i + ']'" class="form-check-input" :class="classes" :id="idPrefix + '_' + String(i)" v-model="inputValue" :value="option[0]">
       <label class="form-check-label" :for="idPrefix + '_' + String(i)">
         {{ option[1] }}
       </label>
@@ -20,7 +20,7 @@ export default {
   emits: ['update:modelValue'],
   props: {
     modelValue: {
-      type: Array,
+      type: null,
       default: [],
     },
     options: {
