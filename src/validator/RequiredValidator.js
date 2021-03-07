@@ -1,4 +1,5 @@
-import _ from 'lodash'
+import _ from 'lodash';
+import {createValidator} from "../Util";
 
 function isEmpty(value) {
     return value === '' || value === null || value === undefined
@@ -6,67 +7,51 @@ function isEmpty(value) {
 }
 
 export default {
-    required(params) {
-        const lang = params.lang.validation.required;
-        const values = !params.multiple ? [params.value] : params.value;
+    required: createValidator((value, params, lang) => {
+        const empty = isEmpty(value);
 
-        let result = [];
-
-        for (const value of values) {
-            const empty = isEmpty(value);
-
-            result.push({
-                isValid: !empty,
-                messages: [
-                    empty ? lang.not_specified : lang.specified,
-                ],
-            });
-        }
-
-        return result;
-    },
-    required_with(params, withoutMode) {
-        const lang = params.lang.validation.required;
-        const values = !params.multiple ? [params.value] : params.value;
-
-        let result = [];
-
+        return {
+            isValid: !empty,
+            messages: [
+                empty ? lang.not_specified : lang.specified,
+            ],
+        };
+    }, 'required', false),
+    required_with: createValidator((value, params, lang, withoutMode) => {
         if (!params.form) {
-            return [];
+            return;
         }
 
-        if (!_.isArray(params.options) && params.options.length < 1) {
+        if (!_.isArray(params.options) || params.options.length < 1) {
             throw new Error('Validator "required_if" requires option');
         }
 
         const form = params.form.container;
-        const requiredWithFieldName = String(params.options[0]);
 
-        for (const value of values) {
+
+        for (const requiredWithFieldName of params.options) {
             if ((isEmpty(form[requiredWithFieldName]) && !withoutMode) || (!isEmpty(form[requiredWithFieldName]) && withoutMode)) {
-                result.push({
+                return {
                     isValid: true,
                     messages: [
                         lang.specified
                     ],
-                });
-                continue;
+                };
             }
-
-            const empty = isEmpty(value);
-            const isValid = Boolean(!empty);
-            result.push({
-                isValid: isValid,
-                messages: [
-                    isValid ? lang.specified : lang.not_specified,
-                ],
-            });
         }
 
-        return result;
-    },
+        const empty = isEmpty(value);
+        const isValid = Boolean(!empty);
+        return {
+            isValid: isValid,
+            messages: [
+                isValid ? lang.specified : lang.not_specified,
+            ],
+        };
+
+    }, 'required', false),
 
     required_without(params) {
-        return this.required_with(params, true)
+        return this.required_with(params, true);
     },
 };

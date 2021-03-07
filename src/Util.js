@@ -78,3 +78,40 @@ export function randomId(length) {
     return randomStringFromChars(length > 0 ? 1 : 0, CHARS_ALPHA_LO + CHARS_ALPHA_HI)
          + randomStringFromChars(length - 1, CHARS_ALPHA_HI + CHARS_ALPHA_LO + CHARS_NUMBER);
 }
+
+/**
+ * Create validator function
+ *
+ * @param {Function} valueValidator
+ * @param {String} lang
+ * @param {Boolean} skipNil
+ * @return {Function}
+ */
+export function createValidator(valueValidator, lang, skipNil) {
+    return function(params, ...args) {
+        let result = [];
+
+        for (const value of (params.multiple ? params.value : [params.value])) {
+
+            if (skipNil && _.isNil(value)) {
+                result.push({
+                    isValid: true,
+                    messages: [],
+                });
+                continue;
+            }
+
+            const v = valueValidator(value, params, params.lang.validation[lang], ...args);
+
+            if (v === false) {
+                break;
+            }
+
+            if (_.isObject(v)) {
+                result.push(v);
+            }
+        }
+
+        return result;
+    };
+}
