@@ -11,7 +11,7 @@ export default {
             format: 'es',
         },
         {
-            name: 'Reforms',
+            name: 'reforms',
             file: 'dist/reforms.umd.js',
             format: 'umd',
         },
