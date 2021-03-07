@@ -1,4 +1,5 @@
 import _ from 'lodash';
+const Flex = require('flex-js');
 
 export const CHARS_ALPHA_LO = 'abcdefghijklmnopqrstuvwxyz';
 export const CHARS_ALPHA_HI = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -140,4 +141,115 @@ export function createMatcher(matchFunc, langNotOk, langOk) {
             messages: (isValid ? (langOk ? [translate(lang[langOk], langParams)] : []) : [translate(lang[langNotOk], langParams)]),
         };
     };
+}
+
+/**
+ * Parse validation rules in string
+ *
+ * @param {String} validationRules
+ * @return {Object}
+ */
+export function parseValidationRules(validationRules) {
+    let tokens = [];
+
+    const lex = new Flex();
+    lex.setIgnoreCase(true);
+    lex.addState('param', true);
+    lex.addStateRule(Flex.STATE_INITIAL, /[a-z0-9_\-]+/
+        , (lexer) => {
+        tokens.push({
+            id: 'rulename',
+            value: lexer.text,
+        });
+
+        const inp = lexer.input();
+
+        if (inp === ':') {
+            lexer.begin('param');
+        } else if (inp === '|') {
+            lexer.begin(Flex.STATE_INITIAL);
+        } else if (inp === '') {
+            ;
+        } else {
+            throw new Error('Unexpected char: "' + inp + '"');
+        }
+    });
+    lex.addStateRule('param', /[^,"'|]+/
+    , (lexer) => {
+            tokens.push({
+                id: 'param',
+                value: lexer.text,
+            });
+
+            const inp = lexer.input();
+
+            if (inp === ',') {
+                return;
+            } else if (inp === '|') {
+                lexer.begin(Flex.STATE_INITIAL);
+            }
+    });
+
+    lex.addStateRule('param', /("|')/, (lexer) => {
+        let char = '';
+        let str = '';
+        const quote = lexer.text;
+
+        do {
+            char = lexer.input();
+
+            if (char === quote) {
+                break;
+            }
+
+            if (char === '\\') {
+                const esc = lexer.input();
+
+                if (esc === '"') {
+                    str += '"';
+                } else if (esc === '\'') {
+                    str += '\'';
+                } else if (esc === 't') {
+                    str += '\t';
+                } else {
+                    str += '\\';
+                }
+
+                continue;
+            }
+
+            str += char;
+
+        } while (char !== '');
+
+        tokens.push({
+            id: "param",
+            value: str,
+        });
+
+        if (lexer.input() !== ',') {
+            lexer.terminate();
+        }
+    });
+
+    lex.setSource(validationRules);
+    lex.lex();
+
+    let params = [];
+
+    let result = [];
+
+    for (const token of tokens.reverse()) {
+        if (token.id === 'param') {
+            params.push(token);
+        } else {
+            result.push({
+                name: token.value,
+                options: params.map((v) => v.value),
+            });
+            params = [];
+        }
+    }
+
+    return result.reverse();
 }

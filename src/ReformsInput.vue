@@ -51,6 +51,7 @@ import {reactive, ref, watch, toRef} from 'vue';
 import mitt from 'mitt';
 import ReformsLabel from "./ReformsLabel";
 import langEn from './lang/ru' // todo change to en
+import {parseValidationRules} from './Util';
 
 export default {
   name: 'ReformsInput',
@@ -63,7 +64,7 @@ export default {
       default: 'string',
     },
     modelValue: null,
-    validation: [Array],
+    validation: [Array, String],
     language: {
       type: Object,
       default: langEn,
@@ -310,6 +311,12 @@ export default {
     }, {deep: true, immediate: true});
 
     watch(toRef(this.$props, 'validation'), (validation) => {
+
+      if (_.isString(validation)) {
+        this.validators = parseValidationRules(validation);
+        return;
+      }
+
       this.validators = validation;
     }, {deep: true, immediate: true});
   },
