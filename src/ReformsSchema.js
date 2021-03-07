@@ -1,7 +1,7 @@
 import {h, toRefs, reactive} from 'vue';
 import _ from 'lodash';
-import ReformsInput from "./ReformsInput";
-import ReformsOutput from "./ReformsOutput";
+import ReformsInput from "./ReformsInput.vue";
+import ReformsOutput from "./ReformsOutput.vue";
 
 function renderTree(schema, component, output, prevName) {
     let ret = [];

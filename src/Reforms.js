@@ -1,16 +1,10 @@
 import _ from 'lodash';
-import ReformsInput from "./ReformsInput";
-import ReformsOutput from "./ReformsOutput";
-import ReformsForm from "./ReformsForm";
-import ReformsCard from "./ReformsCard";
+import ReformsInput from "./ReformsInput.vue";
+import ReformsOutput from "./ReformsOutput.vue";
+import ReformsForm from "./ReformsForm.vue";
+import ReformsCard from "./ReformsCard.vue";
 import ReformsTypes from "./ReformsTypes";
 import ReformsValidators from './ReformsValidators';
-
-// Inputs
-import ReformsStringInput from "./input/ReformsStringInput";
-
-// Outputs
-import ReformsStringOutput from "./output/ReformsStringOutput";
 
 // Plugin main initializer
 export default {

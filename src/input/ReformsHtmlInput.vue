@@ -6,7 +6,7 @@
 <script>
 import ReformsInputMixin from "../ReformsInputMixin";
 import {mergeClasses} from "../Util";
-import {Jodit} from 'jodit';
+const Jodit = require('jodit').Jodit;
 import 'jodit/build/jodit.css';
 import _ from 'lodash';
 import {watch, toRef} from 'vue';

@@ -2,10 +2,16 @@
   "name": "@empla/reforms",
   "version": "0.0.0",
   "description": "Vue 3 and Bootstrap 5 forms generator",
-  "main": "index.js",
+  "main": "dist/reforms.umd.js",
+  "module": "dist/reforms.esm.js",
+  "unpkg": "dist/reforms.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vue-cli-service serve --port=9000 examples/index.js"
+    "dev": "vue-cli-service serve --port=9000 examples/index.js",
+    "build": "rollup -c"
+  },
+  "browser": {
+    "./sfc": "src/Reforms.js"
   },
   "publishConfig": {
     "access": "public"
@@ -29,9 +35,17 @@
   },
   "homepage": "https://github.com/empla/reforms#readme",
   "devDependencies": {
+    "@babel/core": "^7.13.8",
+    "@babel/preset-env": "^7.13.9",
+    "@rollup/plugin-node-resolve": "^11.2.0",
     "@vue/cli-service": "^5.0.0-alpha.4",
     "@vue/compiler-sfc": "^3.0.5",
     "bootstrap": "^5.0.0-beta2",
+    "cross-env": "^7.0.3",
+    "rollup": "^2.40.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-vue": "^6.0.0-beta.10",
     "vue": "^3.0.5"
   },
   "dependencies": {

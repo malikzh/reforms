@@ -15,7 +15,7 @@
 <script>
 import {watch, toRef} from 'vue';
 import _ from 'lodash';
-import ReformsLabel from "./ReformsLabel";
+import ReformsLabel from "./ReformsLabel.vue";
 
 export default {
   name: "ReformsOutput",
