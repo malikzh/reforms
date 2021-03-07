@@ -54,9 +54,10 @@ export default {
 
         this.$emit(result ? 'validateSuccess' : 'validateFailed', e);
         this.$emit('validated', e);
+        this.$emit('submit', e);
+      } else {
+        this.$emit('submit', e);
       }
-
-      this.$emit('submit', e);
     },
     validate() {
       let result = true;
