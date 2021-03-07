@@ -115,3 +115,29 @@ export function createValidator(valueValidator, lang, skipNil) {
         return result;
     };
 }
+
+export function translate(str, params) {
+    return Object.entries(params).reduce(
+        (str, [key, value]) => str.replaceAll(':' + key, value), str);
+}
+
+/**
+ * Create matcher function for validator
+ *
+ * @param {Function|RegExp} matchFunc
+ * @param {String} langNotOk
+ * @param {String?} langOk
+ * @return {function(*=, *=, *=): {isValid: boolean, messages: [*]|[]|[*]}}
+ */
+export function createMatcher(matchFunc, langNotOk, langOk) {
+    return function (value, params, lang, ...args) {
+        let langParams = {};
+
+        const isValid = Boolean(_.isRegExp(matchFunc) ? String(value).match(matchFunc) : matchFunc(value, params, lang, langParams, ...args));
+
+        return {
+            isValid: isValid,
+            messages: (isValid ? (langOk ? [translate(lang[langOk], langParams)] : []) : [translate(lang[langNotOk], langParams)]),
+        };
+    };
+}

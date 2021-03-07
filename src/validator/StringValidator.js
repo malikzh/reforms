@@ -1,61 +1,53 @@
 import _ from 'lodash';
-import {createValidator} from "../Util";
+import {createValidator, createMatcher} from "../Util";
 
 export default {
-    string: createValidator((value, params, lang) => {
-        const isString = _.isString(value);
+    string: createValidator(createMatcher((v) => _.isString(v),
+        'must_be_string'), 'string', true),
+    email: createValidator(createMatcher(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gi,
+        'must_be_email'), 'email', true),
+    url: createValidator(createMatcher(
+        /^(https?):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?$/gi,
+        'must_be_url'), 'url', true),
+    alpha: createValidator(createMatcher(
+        /^[a-z]+$/gi,
+        'not_alpha',
+    ), 'alpha', true),
+    alphanum: createValidator(createMatcher(/^[a-z0-9]+$/gi,'not_alphanum'), 'alpha', true),
+    'in': createValidator(createMatcher(
+        (value, params, lang, langParams) => {
+            langParams['values'] = params.options.join(', ');
+            return !_.isArray(params.options) || params.options.includes(value);
+        },
+        'must_be_in'), 'in', true),
+    not_in: createValidator(createMatcher(
+        (value, params, lang, langParams) => {
+            langParams['values'] = params.options.join(', ');
+            return !_.isArray(params.options) || !params.options.includes(value);
+        },
+        'must_not_be_in'), 'in', true),
+    regex: createValidator(createMatcher((value, params) =>
+        !_.isArray(params.options) || params.options.length < 1 || Boolean(String(value).match(new RegExp(params.options[0], params.options.length > 1 ? params.options[1] : undefined))), 'not_match'), 'regex', true),
+    starts_with: createValidator(createMatcher((value, params, lang, langParams) => {
+        langParams['value'] = _.isArray(params.options) && params.options.length > 0 ? params.options[0] : '';
 
-        return {
-            isValid: isString,
-            messages: [
-                isString ? lang.is_string : lang.must_be_string,
-            ],
-        };
-    }, 'string', true),
-    email: createValidator((value, params, lang) => {
-        // got from: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-        const rem = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gi;
+        return !_.isArray(params.options) || params.options.length < 1 || String(value).startsWith(params.options[0]);
+        },
+        'not_starts'
+    ), 'starts_with', true),
+    ends_with: createValidator(createMatcher((value, params, lang, langParams) => {
+            langParams['value'] = _.isArray(params.options) && params.options.length > 0 ? params.options[0] : '';
 
-        const isEmail = rem.test(value);
+            return !_.isArray(params.options) || params.options.length < 1 || String(value).endsWith(params.options[0]);
+        },
+        'not_ends'
+    ), 'ends_with', true),
+    contains: createValidator(createMatcher((value, params, lang, langParams) => {
+            langParams['value'] = _.isArray(params.options) && params.options.length > 0 ? params.options[0] : '';
 
-        return {
-            isValid: isEmail,
-            messages: isEmail ? [] : [lang.must_be_email],
-        };
-    }, 'email', true),
-    url: createValidator((value, params, lang) => {
-        // got from: https://gist.github.com/rodneyrehm/8013067
-        const rurl = /^(https?|ftp|torrent|image|irc):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?$/gi;
-
-        const isUrl = rurl.test(value);
-
-        return {
-            isValid: isUrl,
-            messages: isUrl ? [] : [lang.must_be_url],
-        };
-    }, 'url', true),
-    alpha(params) {
-        //
-    },
-    alphanum(params) {
-        //
-    },
-    'in'(params, notMode) {
-        //
-    },
-    not_in(params) {
-        return this['in'](params, true);
-    },
-    regex(params) {
-        //
-    },
-    starts_with(params) {
-        //
-    },
-    ends_with(params) {
-        //
-    },
-    contains(params) {
-        //
-    },
+            return !_.isArray(params.options) || params.options.length < 1 || String(value).includes(params.options[0]);
+        },
+        'not_contains'
+    ), 'contains', true),
 };
