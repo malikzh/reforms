@@ -137,6 +137,12 @@ export default {
 
       let xhr = new XMLHttpRequest();
 
+      const form = this.findForm();
+
+      if (form) {
+        form.formLoadingMode = true;
+      }
+
       xhr.upload.addEventListener('progress', (e) => {
         if (e.loaded <= file.size) {
           this.uploadProgress = Math.round(e.loaded / file.size * 100);
@@ -152,6 +158,10 @@ export default {
         const resp = JSON.parse(e.target.response);
         this.currentFile = this.uploadedHandler(resp);
         this.state = 'file';
+
+        if (form) {
+          form.formLoadingMode = false;
+        }
       };
 
       xhr.open("POST", this.uploadUrl);
@@ -178,6 +188,19 @@ export default {
           this.currentFile = null;
           this.state = 'empty';
       });
+    },
+    findForm() {
+      let item = this.$parent;
+
+      while (item && !_.isBoolean(item.formLoadingMode)) {
+        item = item.$parent;
+      }
+
+      if (!_.isBoolean(item.formLoadingMode)) {
+        return null;
+      }
+
+      return item;
     }
   },
 }

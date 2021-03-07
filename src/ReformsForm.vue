@@ -2,6 +2,13 @@
   <form v-bind="$attrs" @submit="onSubmit">
     <reforms-schema v-bind="$attrs" :schema="schema" />
     <slot v-bind="$attrs"></slot>
+    <div class="row">
+      <div class="col">
+        <div class="spinner-border spinner-border-sm text-info" role="status" v-if="formLoadingMode">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
   </form>
 </template>
 <script>
@@ -32,6 +39,11 @@ export default {
       default: true,
     }
   },
+  data() {
+    return {
+      formLoadingMode: false,
+    };
+  },
   created() {
     const containerRef = toRef(this.$data, 'container');
 
@@ -41,6 +53,11 @@ export default {
   },
   methods: {
     onSubmit(e) {
+      if (this.formLoadingMode) {
+        e.preventDefault();
+        return;
+      }
+
       if (this.needValidation) {
         this.$emit('beforeValidate', e);
 
