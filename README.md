@@ -26,6 +26,10 @@ Vue 3 and Bootstrap 5 forms and cards generator
 - Server side validation
 - Multiple and sortable fields
 
+# Demo
+
+You can [try it online](https://codesandbox.io/s/reforms-demo-jbpyv) 
+
 
 ## Installation
 
