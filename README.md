@@ -1,6 +1,8 @@
 
+<div align="center">
 <img src="./content/reforms.png" width="200" alt="Reforms.js">
 
+# Reforms.js
 
 Vue 3 and Bootstrap 5 forms and cards generator
 
@@ -14,6 +16,7 @@ Vue 3 and Bootstrap 5 forms and cards generator
 
 ---
 
+</div>
 
 ## Features
 
