@@ -8,7 +8,7 @@ export default {
             must_be_string: 'Значение должно быть строкой',
         },
         email: {
-            must_be_email: 'Указан некоректный E-mail'
+            must_be_email: 'Указан некорректный E-mail'
         },
         url: {
             must_be_url: 'Указан некорректный URL',

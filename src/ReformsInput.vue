@@ -50,7 +50,7 @@ import _ from 'lodash';
 import {reactive, ref, watch, toRef} from 'vue';
 import mitt from 'mitt';
 import ReformsLabel from "./ReformsLabel.vue";
-import langEn from './lang/ru' // todo change to en
+import langEn from './lang/en'
 import {parseValidationRules} from './Util';
 
 export default {
