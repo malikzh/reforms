@@ -1,6 +1,6 @@
 {
   "name": "@empla/reforms",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Vue 3 and Bootstrap 5 forms generator",
   "main": "dist/reforms.umd.js",
   "module": "dist/reforms.esm.js",
