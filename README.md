@@ -114,7 +114,7 @@ https://reforms.js.org/documentation/
 
 ---
 
-Copyright &copy; 2021 EMPLA GROUP, LLC
+Copyright &copy; 2021 EMPLA GROUP, LLP
 
 Made with ❤️ 
 by [Malik Zharykov](https://github.com/malikzh)️
