@@ -253,3 +253,25 @@ export function parseValidationRules(validationRules) {
 
     return result.reverse();
 }
+
+export function passwordStrengthEstimate(password) {
+    let est = 0;
+
+    if (password.length >= 8) {
+        ++est;
+    }
+
+    if ((/[^a-zA-Z0-9]/).test(password)) {
+        ++est;
+    }
+
+    if ((/[a-z]/).test(password) && (/[A-Z]/).test(password)) {
+        ++est;
+    }
+
+    if ((/[0-9]/).test(password)) {
+        ++est;
+    }
+
+    return est;
+};

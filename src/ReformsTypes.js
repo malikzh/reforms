@@ -25,6 +25,8 @@ import ReformsHtmlInput from "./input/ReformsHtmlInput.vue";
 import ReformsHtmlOutput from "./output/ReformsHtmlOutput.vue";
 import ReformsFileInput from "./input/ReformsFileInput.vue";
 import ReformsFileOutput from "./output/ReformsFileOutput.vue";
+import ReformsPasswordInput from "./input/ReformsPasswordInput";
+import ReformsPasswordOutput from "./output/ReformsPasswordOutput";
 
 //
 // Reforms default components
@@ -89,5 +91,9 @@ export default {
     'file': {
         input: ReformsFileInput,
         output: ReformsFileOutput,
+    },
+    'password': {
+        input: ReformsPasswordInput,
+        output: ReformsPasswordOutput,
     },
 };
