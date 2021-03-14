@@ -50,4 +50,38 @@ export default {
         },
         'not_contains'
     ), 'contains', true),
+    confirmation: createValidator(createMatcher((value, params, lang) => {
+        if (!_.isArray(params.options) || params.options.length < 1) {
+            return true;
+        }
+
+
+        const values = (params.form && params.form.container) || {};
+        const valid = values[params.options[0]] === value;
+
+
+        (params.form && params.form.containerInputs && params.form.containerInputs[params.options[0]] && (() => {
+            const input = params.form.containerInputs[params.options[0]];
+
+            if (valid) {
+                input.inputValidation = [
+                    {
+                        isValid: true,
+                        messages: [],
+                    }
+                ];
+            } else {
+                input.inputValidation = [
+                    {
+                        isValid: false,
+                        messages: [
+                            lang['not_confirmed'],
+                        ],
+                    }
+                ];
+            }
+        })());
+
+        return valid;
+    }, 'not_confirmed'), 'confirmation', true),
 };

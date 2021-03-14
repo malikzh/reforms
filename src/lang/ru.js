@@ -33,5 +33,8 @@ export default {
         contains: {
             not_contains: 'Указанное значение не содержит строку: ":value"',
         },
+        confirmation: {
+            not_confirmed: 'Поля не совпадают',
+        },
     },
 };

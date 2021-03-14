@@ -24,6 +24,11 @@
       <div class="col-6">
         <reforms-output type="string" label="Input label 2" multiple :value="modelStringMultiple" />
       </div>
+      <reforms-form @submit.stop="() => {}">
+        <reforms-input name="keks1" label="kekus1" />
+        <reforms-input name="keks2" validation="confirmation:keks1" label="kekus2" />
+        <button type="submit">submittt</button>
+      </reforms-form>
     </div>
   </div>
 </template>
