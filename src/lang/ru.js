@@ -36,5 +36,8 @@ export default {
         confirmation: {
             not_confirmed: 'Поля не совпадают',
         },
+        checked: {
+            not_checked: 'Необходимо подтвердить',
+        },
     },
 };
