@@ -25,8 +25,8 @@ import ReformsHtmlInput from "./input/ReformsHtmlInput.vue";
 import ReformsHtmlOutput from "./output/ReformsHtmlOutput.vue";
 import ReformsFileInput from "./input/ReformsFileInput.vue";
 import ReformsFileOutput from "./output/ReformsFileOutput.vue";
-import ReformsPasswordInput from "./input/ReformsPasswordInput";
-import ReformsPasswordOutput from "./output/ReformsPasswordOutput";
+import ReformsPasswordInput from "./input/ReformsPasswordInput.vue";
+import ReformsPasswordOutput from "./output/ReformsPasswordOutput.vue";
 
 //
 // Reforms default components
