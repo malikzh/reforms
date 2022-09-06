@@ -37,7 +37,7 @@
   "devDependencies": {
     "@babel/core": "^7.13.8",
     "@babel/preset-env": "^7.13.9",
-    "@rollup/plugin-node-resolve": "^11.2.0",
+    "@rollup/plugin-node-resolve": "^14.0.0",
     "@vue/cli-service": "^5.0.0-alpha.4",
     "@vue/compiler-sfc": "^3.0.5",
     "bootstrap": "^5.0.0-beta2",
